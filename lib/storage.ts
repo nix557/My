@@ -1,9 +1,4 @@
-export type Message = {
-  id: string;
-  role: 'user' | 'assistant' | 'system';
-  text: string;
-  createdAt: string;
-};
+import { Message } from '../types/message';
 
 const KEY = 'nixon_chat_messages_v1';
 
@@ -19,7 +14,7 @@ export const loadMessages = (): Message[] => {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return [];
-    return JSON.parse(raw);
+    return JSON.parse(raw) as Message[];
   } catch (e) {
     console.error('loadMessages failed', e);
     return [];

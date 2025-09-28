@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 
 type Body = {
-  message: string;
-  apiKey: string;
+  message?: string;
+  apiKey?: string;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -12,19 +11,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).end('Method Not Allowed');
   }
 
-  const { message, apiKey } = req.body as Body;
-  if (!apiKey) return res.status(400).json({ error: 'API key tidak disertakan' });
+  const { message } = req.body as Body;
+  if (!message) return res.status(400).json({ error: 'Pesan kosong' });
 
-  try {
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+  // Simple fallback implementation (echo + canned replies).
+  // Replace this with actual Gemini API call when ready.
+  const m = message.toLowerCase();
+  let reply = '';
 
-    const result = await model.generateContent(message);
-    const reply = result.response.text();
+  if (m.includes('halo') || m.includes('hai')) reply = 'Halo! Ada yang bisa saya bantu?';
+  else if (m.includes('siapa') && m.includes('kamu')) reply = 'Saya Nixon Assistant — asisten AI kamu.';
+  else reply = `Kamu bilang: "${message}". (Ini balasan sementara. Sambungkan API Gemini di server jika ingin balasan nyata.)`;
 
-    res.status(200).json({ reply });
-  } catch (err: any) {
-    console.error('Error ke Gemini:', err);
-    res.status(500).json({ error: 'Gagal memanggil Gemini API', detail: err.message || err.toString() });
-  }
+  // simulate latency
+  await new Promise((r) => setTimeout(r, 400));
+
+  res.status(200).json({ reply });
 }

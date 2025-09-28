@@ -1,9 +1,5 @@
 import React from 'react';
-
-export interface Message {
-  role: 'user' | 'assistant';
-  text: string;
-}
+import { Message } from '../types/message';
 
 export default function ChatMessage({ message }: { message: Message }) {
   const isUser = message.role === 'user';
@@ -17,6 +13,7 @@ export default function ChatMessage({ message }: { message: Message }) {
         }`}
       >
         <div className="text-sm whitespace-pre-wrap">{message.text}</div>
+        <div className="text-[10px] text-gray-500 mt-1">{new Date(message.createdAt).toLocaleTimeString()}</div>
       </div>
     </div>
   );

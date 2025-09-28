@@ -1,9 +1,10 @@
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import ChatWindow from '../components/ChatWindow';
 import ChatInput from '../components/ChatInput';
-import { Message, loadMessages, saveMessages } from '../lib/storage';
+import { loadMessages, saveMessages } from '../lib/storage';
+import { Message } from '../types/message';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { loadApiKey, saveApiKey } from '../lib/apiKey';

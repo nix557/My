@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default function Header() {
   return (
     <header className="w-full bg-white dark:bg-gray-800 border-b dark:border-gray-700">

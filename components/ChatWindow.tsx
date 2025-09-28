@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage';
-import { Message } from '../lib/storage';
+import { Message } from '../types/message';
 
 export default function ChatWindow({ messages, typing }: { messages: Message[]; typing: boolean }) {
   const ref = useRef<HTMLDivElement | null>(null);
